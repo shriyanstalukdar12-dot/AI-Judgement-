@@ -5,7 +5,9 @@ const supabaseAnonKey = import.meta.env.VITE_SUPABASE_ANON_KEY as string
 
 export const supabase = createClient(supabaseUrl, supabaseAnonKey, {
   auth: {
-    persistSession: false,
+    persistSession: true,
+    autoRefreshToken: true,
+    detectSessionInUrl: true,
   },
 })
 
@@ -23,6 +25,7 @@ export type Case = {
   status: string
   plaintiff_votes: number
   defendant_votes: number
+  user_id: string
   created_at: string
 }
 
@@ -31,6 +34,14 @@ export type Vote = {
   case_id: string
   side: string
   voter_id: string
+  user_id: string
+  created_at: string
+}
+
+export type Profile = {
+  id: string
+  email: string
+  is_supervisor: boolean
   created_at: string
 }
 

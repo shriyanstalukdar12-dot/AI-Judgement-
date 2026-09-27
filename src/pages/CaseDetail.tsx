@@ -11,27 +11,22 @@ import {
   ThumbsUp,
   ThumbsDown,
   Check,
+  Trash2,
 } from 'lucide-react'
 import { supabase, type Case } from '../lib/supabase'
+import { useAuth } from '../lib/auth'
 import CategoryBadge from '../components/CategoryBadge'
-
-function getVoterId(): string {
-  let id = localStorage.getItem('ai-judgement-voter-id')
-  if (!id) {
-    id = crypto.randomUUID()
-    localStorage.setItem('ai-judgement-voter-id', id)
-  }
-  return id
-}
 
 export default function CaseDetail() {
   const { id } = useParams<{ id: string }>()
   const navigate = useNavigate()
+  const { user, profile } = useAuth()
   const [caseData, setCaseData] = useState<Case | null>(null)
   const [loading, setLoading] = useState(true)
   const [voting, setVoting] = useState(false)
   const [userVote, setUserVote] = useState<string | null>(null)
   const [verdictLoading, setVerdictLoading] = useState(false)
+  const [deleting, setDeleting] = useState(false)
 
   const loadCase = useCallback(async () => {
     const { data, error } = await supabase
@@ -47,13 +42,12 @@ export default function CaseDetail() {
 
     setCaseData(data as Case)
 
-    // Check existing vote
-    const voterId = getVoterId()
+    // Check existing vote by current user
     const { data: voteData } = await supabase
       .from('votes')
       .select('side')
       .eq('case_id', id!)
-      .eq('voter_id', voterId)
+      .eq('user_id', user!.id)
       .maybeSingle()
 
     if (voteData) {
@@ -94,12 +88,9 @@ export default function CaseDetail() {
     if (!caseData || userVote) return
     setVoting(true)
 
-    const voterId = getVoterId()
-
     const { error } = await supabase.from('votes').insert({
       case_id: caseData.id,
       side,
-      voter_id: voterId,
     })
 
     if (error) {
@@ -123,6 +114,18 @@ export default function CaseDetail() {
     setUserVote(side)
     setVoting(false)
   }
+
+  const handleDelete = async () => {
+    if (!caseData) return
+    setDeleting(true)
+    const { error } = await supabase.from('cases').delete().eq('id', caseData.id)
+    if (!error) {
+      navigate('/browse')
+    }
+    setDeleting(false)
+  }
+
+  const canDelete = caseData && user && (caseData.user_id === user.id || profile?.is_supervisor)
 
   if (loading) {
     return (
@@ -178,13 +181,29 @@ export default function CaseDetail() {
         <h1 className="font-serif text-2xl sm:text-4xl font-bold text-stone-900 mb-2">
           {caseData.title}
         </h1>
-        <p className="text-sm text-stone-400">
-          Filed {new Date(caseData.created_at).toLocaleDateString('en-US', {
-            year: 'numeric',
-            month: 'long',
-            day: 'numeric',
-          })}
-        </p>
+        <div className="flex items-center justify-between gap-4">
+          <p className="text-sm text-stone-400">
+            Filed {new Date(caseData.created_at).toLocaleDateString('en-US', {
+              year: 'numeric',
+              month: 'long',
+              day: 'numeric',
+            })}
+          </p>
+          {canDelete && (
+            <button
+              onClick={handleDelete}
+              disabled={deleting}
+              className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-sm font-medium text-rose-500 bg-rose-50 border border-rose-200 hover:bg-rose-100 hover:border-rose-300 transition-all active:scale-95 disabled:opacity-50"
+            >
+              {deleting ? (
+                <Loader2 className="w-4 h-4 animate-spin" />
+              ) : (
+                <Trash2 className="w-4 h-4" />
+              )}
+              {profile?.is_supervisor ? 'Remove Case' : 'Delete'}
+            </button>
+          )}
+        </div>
       </div>
 
       {/* VS Layout */}
