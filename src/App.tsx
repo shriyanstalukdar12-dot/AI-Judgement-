@@ -8,7 +8,7 @@ import CaseDetail from './pages/CaseDetail'
 
 export default function App() {
   return (
-    <div className="min-h-screen flex flex-col bg-neutral-950">
+    <div className="min-h-screen flex flex-col bg-stone-100">
       <Navbar />
       <main className="flex-1">
         <Routes>

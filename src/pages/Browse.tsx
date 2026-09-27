@@ -69,10 +69,10 @@ export default function Browse() {
   return (
     <div className="max-w-6xl mx-auto px-4 sm:px-6 py-8 sm:py-10 animate-fade-in">
       <div className="mb-8">
-        <h1 className="font-serif text-3xl sm:text-4xl font-bold text-white mb-2">
+        <h1 className="font-serif text-3xl sm:text-4xl font-bold text-stone-900 mb-2">
           Browse Cases
         </h1>
-        <p className="text-neutral-400">
+        <p className="text-stone-500">
           Explore disputes filed by the community. Read both sides, see the AI
           verdict, and cast your vote.
         </p>
@@ -81,7 +81,7 @@ export default function Browse() {
       {/* Search & Filters */}
       <div className="space-y-4 mb-6">
         <div className="relative">
-          <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 w-5 h-5 text-neutral-500" />
+          <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 w-5 h-5 text-stone-400" />
           <input
             className="input pl-12"
             placeholder="Search by title, parties, or arguments..."
@@ -92,13 +92,13 @@ export default function Browse() {
 
         <div className="flex flex-col sm:flex-row gap-3">
           <div className="flex items-center gap-2 overflow-x-auto pb-1">
-            <Filter className="w-4 h-4 text-neutral-500 shrink-0" />
+            <Filter className="w-4 h-4 text-stone-400 shrink-0" />
             <button
               onClick={() => setCategory('all')}
               className={`px-3.5 py-1.5 rounded-lg text-sm font-medium whitespace-nowrap transition-all ${
                 category === 'all'
-                  ? 'bg-primary-600 text-white'
-                  : 'bg-neutral-800 text-neutral-400 hover:bg-neutral-700 hover:text-white'
+                  ? 'bg-primary-600 text-white shadow-sm shadow-primary-600/20'
+                  : 'bg-white text-stone-600 border border-stone-200 hover:bg-stone-50 hover:text-stone-900'
               }`}
             >
               All
@@ -109,8 +109,8 @@ export default function Browse() {
                 onClick={() => setCategory(cat)}
                 className={`px-3.5 py-1.5 rounded-lg text-sm font-medium whitespace-nowrap transition-all ${
                   category === cat
-                    ? 'bg-primary-600 text-white'
-                    : 'bg-neutral-800 text-neutral-400 hover:bg-neutral-700 hover:text-white'
+                    ? 'bg-primary-600 text-white shadow-sm shadow-primary-600/20'
+                    : 'bg-white text-stone-600 border border-stone-200 hover:bg-stone-50 hover:text-stone-900'
                 }`}
               >
                 {cat}
@@ -122,7 +122,7 @@ export default function Browse() {
             <select
               value={sort}
               onChange={(e) => setSort(e.target.value as SortOption)}
-              className="px-4 py-2 rounded-lg bg-neutral-800 border border-neutral-700 text-neutral-200 text-sm font-medium focus:outline-none focus:border-primary-500 cursor-pointer"
+              className="px-4 py-2 rounded-lg bg-white border border-stone-300 text-stone-700 text-sm font-medium focus:outline-none focus:border-primary-500 focus:ring-2 focus:ring-primary-500/20 cursor-pointer"
             >
               <option value="recent">Most Recent</option>
               <option value="contested">Most Contested</option>
@@ -138,7 +138,7 @@ export default function Browse() {
           {[...Array(6)].map((_, i) => (
             <div
               key={i}
-              className="card p-5 h-48 animate-pulse bg-neutral-900/50"
+              className="card p-5 h-48 animate-pulse bg-stone-200/40"
             />
           ))}
         </div>
@@ -150,8 +150,8 @@ export default function Browse() {
         </div>
       ) : (
         <div className="card p-12 text-center">
-          <Scale className="w-12 h-12 text-neutral-700 mx-auto mb-4" />
-          <p className="text-neutral-400">
+          <Scale className="w-12 h-12 text-stone-300 mx-auto mb-4" />
+          <p className="text-stone-500">
             No cases found. Try adjusting your filters.
           </p>
         </div>

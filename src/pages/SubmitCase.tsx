@@ -76,13 +76,13 @@ export default function SubmitCase() {
   return (
     <div className="max-w-3xl mx-auto px-4 sm:px-6 py-8 sm:py-12 animate-fade-in">
       <div className="text-center mb-8">
-        <div className="inline-flex items-center justify-center w-16 h-16 rounded-2xl bg-gradient-to-br from-primary-600 to-primary-800 mb-4">
+        <div className="inline-flex items-center justify-center w-16 h-16 rounded-2xl bg-gradient-to-br from-primary-600 to-primary-800 mb-4 shadow-lg shadow-primary-600/20">
           <Gavel className="w-8 h-8 text-white animate-gavel-strike" />
         </div>
-        <h1 className="font-serif text-3xl sm:text-4xl font-bold text-white mb-2">
+        <h1 className="font-serif text-3xl sm:text-4xl font-bold text-stone-900 mb-2">
           File a New Case
         </h1>
-        <p className="text-neutral-400">
+        <p className="text-stone-500">
           Present both sides of the dispute fairly. The AI judge will review and
           deliver a verdict.
         </p>
@@ -110,8 +110,8 @@ export default function SubmitCase() {
                 onClick={() => setForm({ ...form, category: cat })}
                 className={`px-4 py-2 rounded-lg text-sm font-medium transition-all ${
                   form.category === cat
-                    ? 'bg-primary-600 text-white'
-                    : 'bg-neutral-800 text-neutral-400 hover:bg-neutral-700 hover:text-white'
+                    ? 'bg-primary-600 text-white shadow-sm shadow-primary-600/20'
+                    : 'bg-stone-100 text-stone-600 hover:bg-stone-200 hover:text-stone-900'
                 }`}
               >
                 {cat}
@@ -156,7 +156,7 @@ export default function SubmitCase() {
             }
             maxLength={2000}
           />
-          <p className="text-xs text-neutral-500 mt-1">
+          <p className="text-xs text-stone-400 mt-1">
             {form.plaintiff_argument.length}/2000
           </p>
         </div>
@@ -174,19 +174,19 @@ export default function SubmitCase() {
             }
             maxLength={2000}
           />
-          <p className="text-xs text-neutral-500 mt-1">
+          <p className="text-xs text-stone-400 mt-1">
             {form.defendant_argument.length}/2000
           </p>
         </div>
 
         {error && (
-          <div className="p-4 rounded-xl bg-error-500/10 border border-error-500/20 text-error-400 text-sm">
+          <div className="p-4 rounded-xl bg-rose-50 border border-rose-200 text-rose-600 text-sm">
             {error}
           </div>
         )}
 
         <div className="flex items-center justify-between gap-4 pt-2">
-          <div className="flex items-center gap-2 text-sm text-neutral-500">
+          <div className="flex items-center gap-2 text-sm text-stone-400">
             <Scale className="w-4 h-4" />
             Both sides will be reviewed impartially
           </div>

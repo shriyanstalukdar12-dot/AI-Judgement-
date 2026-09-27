@@ -13,13 +13,13 @@ export default function Navbar() {
   ]
 
   return (
-    <header className="sticky top-0 z-50 bg-neutral-950/80 backdrop-blur-lg border-b border-neutral-800 safe-top">
+    <header className="sticky top-0 z-50 bg-stone-100/80 backdrop-blur-lg border-b border-stone-200/60 safe-top">
       <nav className="max-w-6xl mx-auto px-4 sm:px-6 h-16 flex items-center justify-between">
         <Link to="/" className="flex items-center gap-2.5 group" onClick={() => setOpen(false)}>
-          <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-primary-600 to-primary-800 flex items-center justify-center transition-transform group-hover:scale-105">
+          <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-primary-600 to-primary-800 flex items-center justify-center transition-transform group-hover:scale-105 shadow-sm shadow-primary-600/20">
             <Scale className="w-5 h-5 text-white" />
           </div>
-          <span className="font-serif text-xl font-semibold text-white">AI Judgement</span>
+          <span className="font-serif text-xl font-semibold text-stone-900">AI Judgement</span>
         </Link>
 
         <div className="hidden md:flex items-center gap-1">
@@ -29,8 +29,8 @@ export default function Navbar() {
               to={link.to}
               className={`px-4 py-2 rounded-lg font-medium transition-colors ${
                 location.pathname === link.to
-                  ? 'text-white bg-neutral-800'
-                  : 'text-neutral-400 hover:text-white hover:bg-neutral-800/50'
+                  ? 'text-primary-700 bg-primary-50'
+                  : 'text-stone-500 hover:text-stone-900 hover:bg-stone-200/60'
               }`}
             >
               {link.label}
@@ -43,7 +43,7 @@ export default function Navbar() {
         </div>
 
         <button
-          className="md:hidden p-2 rounded-lg text-neutral-300 hover:bg-neutral-800"
+          className="md:hidden p-2 rounded-lg text-stone-600 hover:bg-stone-200/60"
           onClick={() => setOpen(!open)}
           aria-label="Toggle menu"
         >
@@ -52,7 +52,7 @@ export default function Navbar() {
       </nav>
 
       {open && (
-        <div className="md:hidden border-t border-neutral-800 bg-neutral-950 px-4 py-3 space-y-1 animate-slide-up">
+        <div className="md:hidden border-t border-stone-200/60 bg-stone-100 px-4 py-3 space-y-1 animate-slide-up">
           {links.map((link) => (
             <Link
               key={link.to}
@@ -60,8 +60,8 @@ export default function Navbar() {
               onClick={() => setOpen(false)}
               className={`block px-4 py-3 rounded-lg font-medium transition-colors ${
                 location.pathname === link.to
-                  ? 'text-white bg-neutral-800'
-                  : 'text-neutral-400 hover:text-white hover:bg-neutral-800/50'
+                  ? 'text-primary-700 bg-primary-50'
+                  : 'text-stone-500 hover:text-stone-900 hover:bg-stone-200/60'
               }`}
             >
               {link.label}
