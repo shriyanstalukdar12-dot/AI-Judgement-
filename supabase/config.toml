@@ -1,0 +1,2 @@
+[functions.judge]
+verify_jwt = false
